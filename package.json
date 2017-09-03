@@ -1,0 +1,15 @@
+{
+	"name": "@2biazdk/github-visualize-whitespace",
+	"description": "Chrome Extension for visualizing whitespace characters in Github diffs",
+	"private": true,
+	"repository": "2biazdk/github-visualize-whitespace",
+	"contributors": [
+		"Tobias Christian Jensen <tobias@2biaz.dk>"
+	],
+	"scripts": {
+		"build": "gulp build"
+	},
+	"license": "UNLICENSED",
+	"devDependencies": {
+	}
+}

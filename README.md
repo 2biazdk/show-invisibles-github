@@ -1,0 +1,1 @@
+# Chrome Extension for visualizing whitespace characters in Github diffs
