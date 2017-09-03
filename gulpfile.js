@@ -17,6 +17,7 @@ gulp.task(
 			'clean',
 			'todo',
 			'js',
+			'img',
 			'misc',
 			'packages'
 		)
@@ -26,6 +27,7 @@ gulp.task(
 gulp.task('clean', clean);
 gulp.task('todo', todos);
 gulp.task('js', js);
+gulp.task('img', img);
 gulp.task('misc', misc);
 gulp.task('packages', packages);
 
@@ -120,41 +122,21 @@ function jsLint() {
 
 }
 
-function html() {
+function img() {
+	return gulp.src('./src/img/**/*.{jpg,jpeg,png,gif,svg,bmp,ico}')
 
-	return gulp.src('./src/**/*.{html,htm}')
-
-		// HTML linter
-		.pipe( plugin.htmlhint() )
-		.pipe( plugin.htmlhint.reporter() )
-
-		// Clean HTML
-		.pipe( plugin.htmlmin({
-			html5: true,
-			useShortDoctype: true,
-			removeRedundantAttributes: true,
-			sortClassName: true,
-			sortAttributes: true
-		}) )
-
-		// Save in Src folder
-		.pipe( gulp.dest('./src') )
-
-		// Clean even more for Dist folder
-		.pipe( plugin.htmlmin({
-			removeComments: true
-		}) )
+		// Don't break on error
+		.pipe( plugin.plumber() )
 
 		// Save in Dist folder
-		.pipe( gulp.dest('./dist') )
+		.pipe( gulp.dest('./dist/img') )
 
 		// Show size
 		.pipe( plugin.size({
-			title: 'html',
+			title: 'img',
 			showFiles: true,
 			gzip: true
 		}) )
-
 	;
 
 }
