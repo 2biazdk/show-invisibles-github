@@ -1,0 +1,25 @@
+{
+	"manifest_version": 2,
+
+	"version": "1.0",
+	"name": "Visualize whitespace",
+	"description": "Chrome Extension for visualizing whitespace characters in Github diffs",
+	"author": "2biazdk",
+
+	"offline_enabled": true,
+	"minimum_chrome_version": "53",
+
+	"icons": {
+		"16": "img/symbol@16w.png",
+		"19": "img/symbol@19w.png",
+		"32": "img/symbol@32w.png",
+		"38": "img/symbol@38w.png",
+		"48": "img/symbol@48w.png",
+		"128": "img/symbol@128w.png"
+	},
+
+	"content_scripts": [{
+		"matches": ["*://*.github.com/*"],
+		"js": ["script.js"]
+	}]
+}
