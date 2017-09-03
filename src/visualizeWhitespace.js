@@ -1,4 +1,4 @@
-javascript:(function () {
+(function () {
 	"use strict";
 
 	var selector = ".diff-table .blob-code-inner";
@@ -51,7 +51,5 @@ javascript:(function () {
 
 	document.body.innerHTML += '<style type="text/css">._visualizeWS-tab, ._visualizeWS-space { display: inline-block; text-align: center; color: #bbb; } ._visualizeWS-tab { width: 56.45px; } ._visualizeWS-space { width: 7.25px; }</style>';
 })();
-
-void(0);
 
 /* TODO: Don't replace the very first character in a line. (For non-diff lines, Github will insert a space instead of a plus or minus.) */

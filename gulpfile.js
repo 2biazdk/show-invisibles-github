@@ -17,7 +17,6 @@ gulp.task(
 			'clean',
 			'todo',
 			'js',
-			'jslint',
 			'misc',
 			'packages'
 		)
