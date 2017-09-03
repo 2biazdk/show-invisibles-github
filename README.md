@@ -1,1 +1,3 @@
-# Chrome Extension for visualizing whitespace characters in Github diffs
+# Visualize whitespace characters in Github diffs
+
+Chrome Extension: _A LINK IS YET TO COME_...
