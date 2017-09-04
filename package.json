@@ -1,8 +1,8 @@
 {
-	"name": "@2biazdk/github-visualize-whitespace",
+	"name": "@2biazdk/show-invisibles-github",
 	"description": "Chrome Extension for visualizing whitespace characters in Github diffs",
 	"private": true,
-	"repository": "2biazdk/github-visualize-whitespace",
+	"repository": "2biazdk/show-invisibles-github",
 	"contributors": [
 		"Tobias Christian Jensen <tobias@2biaz.dk>"
 	],

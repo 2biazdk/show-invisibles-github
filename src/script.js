@@ -51,3 +51,4 @@
 })();
 
 /* TODO: Don't replace the very first character in a line. (For non-diff lines, Github will insert a space instead of a plus or minus.) */
+/* TODO: Make sure extension is run on each page load, when clicking around on a github pull request. */
