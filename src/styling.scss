@@ -1,11 +1,9 @@
-._visualizeWS-tab,
-._visualizeWS-space
+._visualizeWS
 {
 	position: relative;
 }
 
-._visualizeWS-tab:before,
-._visualizeWS-space:before
+._visualizeWS:before
 {
 	position: absolute;
 	top: 0;
@@ -24,4 +22,9 @@
 ._visualizeWS-space:before
 {
 	content: '\22C5';
+}
+
+.diff-table .blob-code-inner > span:first-child > ._visualizeWS-space:first-child:before
+{
+	content: ' ';
 }
