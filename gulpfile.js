@@ -17,6 +17,8 @@ gulp.task(
 			'clean',
 			'todo',
 			'js',
+			'css',
+			'csslint',
 			'img',
 			'misc',
 			'packages'
@@ -27,11 +29,13 @@ gulp.task(
 gulp.task('clean', clean);
 gulp.task('todo', todos);
 gulp.task('js', js);
+gulp.task('css', css);
 gulp.task('img', img);
 gulp.task('misc', misc);
 gulp.task('packages', packages);
 
 gulp.task('jslint', jsLint);
+gulp.task('csslint', cssLint);
 
 function clean() {
 	return plugin.del('dist/**');
@@ -121,6 +125,79 @@ function jsLint() {
 	;
 
 }
+
+function css() {
+
+		return gulp.src('./src/*.scss')
+
+			// Don't break on error
+			.pipe( plugin.plumber() )
+
+			// Sourcemap
+			.pipe( plugin.sourcemaps.init() )
+
+			// Auto-prefixer
+			.pipe( plugin.autoprefixer({
+				'browsers': [
+					'chrome >= 53'
+				]
+			}) )
+
+			// Clean
+			.pipe( plugin.csscomb() )
+			.pipe( plugin.tabify() )
+
+			// Save in Src folder
+			.pipe( gulp.dest('src') )
+
+			// SASS
+			.pipe( plugin.sass() )
+
+			// Clean CSS
+			.pipe( plugin.cleanCss() )
+
+			// Write sourcemaps
+			.pipe( plugin.sourcemaps.write('.') )
+
+			// Save in Dist folder
+			.pipe( gulp.dest('dist') )
+
+			// Show size
+			.pipe( plugin.size({
+				title: 'css',
+				showFiles: true,
+				gzip: true
+			}) )
+
+		;
+
+	}
+
+	function cssLint() {
+
+		return gulp.src('./src/*.scss')
+
+			// Don't break on error
+			.pipe( plugin.plumber() )
+
+			// Auto-prefixer
+			.pipe( plugin.autoprefixer({
+				'browsers': [
+					'chrome >= 53'
+				]
+			}) )
+
+			// Clean
+			.pipe( plugin.csscomb() )
+			.pipe( plugin.tabify() )
+
+			// CSS linter
+			.pipe( plugin.csslint('gulp/css-lint-format.js') )
+			.pipe( plugin.csslint.formatter() )
+
+		;
+
+	};
 
 function img() {
 	return gulp.src('./src/img/**/*.{jpg,jpeg,png,gif,svg,bmp,ico}')

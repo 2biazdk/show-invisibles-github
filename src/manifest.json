@@ -20,6 +20,11 @@
 
 	"content_scripts": [{
 		"matches": ["*://*.github.com/*"],
-		"js": ["script.js"]
-	}]
+		"js": ["script.js"],
+		"css": ["styling.css"]
+	}],
+
+	"web_accessible_resources": [
+		"styling.css"
+	]
 }

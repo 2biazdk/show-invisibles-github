@@ -48,8 +48,6 @@
 	function htmlEntities(string) {
 		return String(string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 	}
-
-	document.body.innerHTML += '<style type="text/css">._visualizeWS-tab, ._visualizeWS-space { position: relative; } ._visualizeWS-tab:before, ._visualizeWS-space:before { position: absolute; top: 0; left: 50%; transform: translate(-50%, -2.75px); color: #bbb; } ._visualizeWS-tab:before { content: "\\2192"; } ._visualizeWS-space:before { content: "\\22C5"; }</style>';
 })();
 
 /* TODO: Don't replace the very first character in a line. (For non-diff lines, Github will insert a space instead of a plus or minus.) */
