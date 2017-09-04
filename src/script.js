@@ -1,7 +1,7 @@
 (function () {
 	"use strict";
 
-	var selector = ".diff-table .blob-code-inner";
+	var selector = ".diff-table .blob-code-inner:not(.blob-code-hunk)";
 	var whitespaces = [
 		{
 			"name": "space",
@@ -53,4 +53,3 @@
 })();
 
 /* TODO: Don't replace the very first character in a line. (For non-diff lines, Github will insert a space instead of a plus or minus.) */
-/* TODO: Don't replace whitespace within '.blob-code-inner.blob-code-hunk'. */
