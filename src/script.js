@@ -51,4 +51,3 @@
 })();
 
 /* TODO: Don't replace the very first character in a line. (For non-diff lines, Github will insert a space instead of a plus or minus.) */
-/* TODO: Selector only finds elements in the first .diff-table. */
