@@ -6,12 +6,12 @@
 		{
 			"name": "space",
 			"regex": RegExp(" ", "g"),
-			"char": "&sdot;"
+			"char": " "
 		},
 		{
 			"name": "tab",
 			"regex": RegExp("\\t", "g"),
-			"char": "&rarr;"
+			"char": "	"
 		}
 	];
 
@@ -49,7 +49,7 @@
 		return String(string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 	}
 
-	document.body.innerHTML += '<style type="text/css">._visualizeWS-tab, ._visualizeWS-space { display: inline-block; text-align: center; color: #bbb; } ._visualizeWS-tab { width: 56.45px; } ._visualizeWS-space { width: 7.25px; }</style>';
+	document.body.innerHTML += '<style type="text/css">._visualizeWS-tab, ._visualizeWS-space { position: relative; } ._visualizeWS-tab:before, ._visualizeWS-space:before { position: absolute; top: 0; left: 50%; transform: translate(-50%, -2.75px); color: #bbb; } ._visualizeWS-tab:before { content: "\\2192"; } ._visualizeWS-space:before { content: "\\22C5"; }</style>';
 })();
 
 /* TODO: Don't replace the very first character in a line. (For non-diff lines, Github will insert a space instead of a plus or minus.) */
