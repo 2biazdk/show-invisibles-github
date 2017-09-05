@@ -58,9 +58,10 @@
 	window.onhashchange = function () {
 		visualizeWSInit();
 	}
+	
+	setInterval(visualizeWSInit, 3000);
 
 	visualizeWSInit();
 })();
 
 /* TODO: Remember which diffs are already processed. */
-/* TODO: Run script at an interval to take dynamic page reloads into account. */
