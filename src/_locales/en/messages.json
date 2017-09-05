@@ -1,0 +1,14 @@
+{
+	"appName": {
+		"message": "Show Invisibles on Github",
+		"description": "The title of the application, displayed in the web store."
+	},
+	"appNameShort": {
+		"message": "Show Invisibles", 
+		"description": "The short_name (max 12 characters recommended) is a short version of the app name. It is often used where there is insufficient space for the full name, such as App launcher and New Tab page."
+	},
+	"appDesc": {
+		"message": "Spaces or tabs? Keep your coding style consistent by making whitespace characters visible on Github.", 
+		"description": "The description of the application, displayed in the web store."
+	}
+}

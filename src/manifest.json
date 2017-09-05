@@ -1,10 +1,11 @@
 {
 	"manifest_version": 2,
+	"version": "1.1.2",
 
-	"version": "1.1",
-	"name": "Show invisibles on Github",
-	"short_name": "Show invisibles",
-	"description": "Spaces or tabs? Keep your coding style consistent by making whitespace characters visible on Github.",
+	"default_locale": "en",
+	"name": "__MSG_appName__",
+	"short_name": "__MSG_appNameShort__",
+	"description": "__MSG_appDesc__",
 	"author": "2biazdk",
 
 	"offline_enabled": true,
