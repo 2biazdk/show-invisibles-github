@@ -5,6 +5,8 @@ var plugin = require('gulp-load-plugins')({
 	pattern: [
 		'gulp-*',
 		'gulp.*',
+		
+		'vinyl-paths',
 		'del',
 		'run-sequence'
 	]
@@ -38,7 +40,7 @@ gulp.task('jslint', jsLint);
 gulp.task('csslint', cssLint);
 
 function clean() {
-	return plugin.del('dist/**');
+	return plugin.del(['dist/**', 'TODO.md']);
 }
 
 function todos() {
@@ -51,8 +53,10 @@ function todos() {
 		// Sourcemap
 		.pipe( plugin.todo() )
 
-		// Save in Dist folder
-		.pipe( gulp.dest('.') )
+		// Save in Dist folder, or delete if empty
+		.pipe(plugin.if(function (file) {
+			return file.todos && Boolean(file.todos.length);
+		}, gulp.dest('.'), plugin.vinylPaths(plugin.del)))
 
 		// Show size
 		.pipe( plugin.size({
