@@ -1,7 +1,7 @@
 (function () {
 	"use strict";
 
-	var selector = ".diff-table .blob-code-inner:not(.blob-code-hunk)";
+	var selector = ".blob-code-inner:not(.blob-code-hunk)";
 	var whitespaces = [
 		{
 			"name": "space",
