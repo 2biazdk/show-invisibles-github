@@ -175,7 +175,7 @@ function css() {
 
 	function cssLint() {
 
-		return gulp.src('./src/*.scss')
+		return gulp.src('./dist/*.css')
 
 			// Don't break on error
 			.pipe( plugin.plumber() )
