@@ -4,7 +4,7 @@
 	"version": "1.1",
 	"name": "Show invisibles on Github",
 	"short_name": "Show invisibles",
-	"description": "Chrome Extension for visualizing whitespace characters in Github diffs",
+	"description": "Spaces or tabs? Keep your coding style consistent by making whitespace characters visible on Github.",
 	"author": "2biazdk",
 
 	"offline_enabled": true,
