@@ -19,6 +19,17 @@
 		"128": "img/symbol@128w.png"
 	},
 
+	"browser_action": {
+		"default_icon": {
+			"16": "img/symbol@16w.png",
+			"19": "img/symbol@19w.png",
+			"32": "img/symbol@32w.png",
+			"38": "img/symbol@38w.png",
+			"48": "img/symbol@48w.png",
+			"128": "img/symbol@128w.png"
+		}
+	},
+
 	"content_scripts": [{
 		"matches": ["*://*.github.com/*"],
 		"js": ["script.js"],
