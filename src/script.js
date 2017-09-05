@@ -24,7 +24,11 @@
 	function visualizeWS(whitespace) {
 		var elements = document.querySelectorAll(selector);
 		[...elements].forEach(function (element) {
+			if (element.dataset["visible" + whitespace.name]) {
+				return;
+			}
 			visualizeWSChildren(element, whitespace);
+			element.dataset["visible" + whitespace.name] = true;
 		});
 	}
 
@@ -53,15 +57,13 @@
 
 	window.onpopstate = function () {
 		visualizeWSInit();
-	}
+	};
 
 	window.onhashchange = function () {
 		visualizeWSInit();
-	}
+	};
 	
 	setInterval(visualizeWSInit, 3000);
 
 	visualizeWSInit();
 })();
-
-/* TODO: Remember which diffs are already processed. */
