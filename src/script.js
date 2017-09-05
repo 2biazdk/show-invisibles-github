@@ -15,9 +15,11 @@
 		}
 	];
 
-	whitespaces.forEach(function(whitespace) {
-		visualizeWS(whitespace);
-	});
+	function visualizeWSInit() {
+		whitespaces.forEach(function(whitespace) {
+			visualizeWS(whitespace);
+		});
+	}
 
 	function visualizeWS(whitespace) {
 		var elements = document.querySelectorAll(selector);
@@ -34,7 +36,6 @@
 			}
 
 			var newChild = document.createElement("span");
-			var className = "_visualizeWS _visualizeWS-" + whitespace.name;
 
 			var html = htmlEntities(child.nodeValue);
 			html = html.replace(whitespace.regex, '<span class="_visualizeWS _visualizeWS-' + whitespace.name + '">' + whitespace.char + '</span>');
@@ -49,6 +50,17 @@
 	function htmlEntities(string) {
 		return String(string).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 	}
+
+	window.onpopstate = function () {
+		visualizeWSInit();
+	}
+
+	window.onhashchange = function () {
+		visualizeWSInit();
+	}
+
+	visualizeWSInit();
 })();
 
-/* TODO: Make sure extension is run on each page load, when clicking around on a github pull request. */
+/* TODO: Remember which diffs are already processed. */
+/* TODO: Run script at an interval to take dynamic page reloads into account. */
