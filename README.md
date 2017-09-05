@@ -1,3 +1,3 @@
-# Visualize whitespace characters in Github diffs
+# Visualize whitespace characters on Github
 
-Chrome Extension: _A LINK IS YET TO COME_...
+You can now download the [Chrome Extension](https://chrome.google.com/webstore/detail/show-invisibles-on-github/lhibcpaagnchghjnedmpacbkeombaiil).
