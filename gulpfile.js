@@ -226,7 +226,7 @@ function img() {
 
 function misc() {
 
-	return gulp.src('./src/**/*.{xml,json,ico}')
+	return gulp.src('./src/**/*.{html,xml,json,ico}')
 
 		// Save in Dist folder
 		.pipe( gulp.dest('./dist') )
