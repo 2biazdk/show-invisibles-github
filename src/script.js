@@ -1,8 +1,8 @@
 (function () {
 	"use strict";
 
-	var selector = ".blob-code-inner:not(.blob-code-hunk)";
-	var whitespaces = [
+	const selector = ".blob-code-inner:not(.blob-code-hunk)";
+	const blanks = [
 		{
 			"name": "space",
 			"regex": RegExp(" ", "g"),
@@ -15,55 +15,61 @@
 		}
 	];
 
-	function visualizeWSInit() {
-		whitespaces.forEach(function(whitespace) {
-			visualizeWS(whitespace);
+	function extension() {
+		let elements = document.querySelectorAll(selector);
+		blanks.forEach(blank => {
+			forElements(blank);
 		});
-	}
 
-	function visualizeWS(whitespace) {
-		var elements = document.querySelectorAll(selector);
-		[...elements].forEach(function (element) {
-			if (element.dataset["visible" + whitespace.name]) {
-				return;
-			}
-			visualizeWSChildren(element, whitespace);
-			element.dataset["visible" + whitespace.name] = true;
-		});
-	}
-
-	function visualizeWSChildren(element, whitespace) {
-		[...element.childNodes].forEach(function (child) {
-			if (child.nodeName !== "#text") {
-				visualizeWSChildren(child, whitespace);
-				return;
-			}
-
-			var newChild = document.createElement("span");
-
-			var html = htmlEntities(child.nodeValue);
-			html = html.replace(whitespace.regex, '<span class="_visualizeWS _visualizeWS-' + whitespace.name + '">' + whitespace.char + '</span>');
-
-			newChild.innerHTML = html;
-
-			child.parentNode.insertBefore(newChild, child);
-			child.remove();
-		});
-	}
-
-	function htmlEntities(string) {
-		return String(string).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-	}
-
-	window.onpopstate = function () {
-		visualizeWSInit();
-	};
-
-	window.onhashchange = function () {
-		visualizeWSInit();
-	};
+		function forElements(blank) {
+			[...elements].forEach(element => {
+				if (element.dataset["visible" + blank.name]) {
+					return;
+				}
+				forChildren(element, blank);
+				element.dataset["visible" + blank.name] = true;
+			});
+		}
 	
-	setInterval(visualizeWSInit, 3000);
+		function forChildren(element, blank) {
+			[...element.childNodes].forEach(child => {
+				if (child.nodeName !== "#text") {
+					forChildren(child, blank);
+					return;
+				}
+	
+				let newChild = document.createElement("span");
+				newChild.innerHTML = replaceBlanks(child.nodeValue, blank);
+	
+				child.parentNode.insertBefore(newChild, child);
+				child.remove();
+			});
+		}
+	
+		function replaceBlanks(string, blank) {
+			return htmlEntities(string)
+				.replace(
+					blank.regex,
+					'<span class="invisible invisible__' + blank.name + '">' + blank.char + '</span>'
+				);
+		}
+	
+		function htmlEntities(string) {
+			return String(string)
+				.replace(/&/g, "&amp;")
+				.replace(/</g, "&lt;")
+				.replace(/>/g, "&gt;")
+				.replace(/"/g, "&quot;");
+		}
+	}
 
-	visualizeWSInit();
+	// Initialize on these handlers
+	["load", "popstate", "hashchange"].forEach(event =>
+		addEventListener(event, extension)
+	);
+
+	// When handlers that are not caught
+	setInterval(extension, 3000);
 })();
+
+/* TODO: Option to toggle on/off on toolbar icon. */

@@ -116,7 +116,9 @@ function jsLint() {
 		.pipe( plugin.plumber() )
 
 		// JS linter
-		.pipe( plugin.jshint() )
+		.pipe( plugin.jshint({
+			esversion: 6
+		}) )
 		.pipe( plugin.jshint.reporter('default') )
 
 		// Show size
