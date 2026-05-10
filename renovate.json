@@ -1,6 +1,84 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    ":dependencyDashboard"
+  ],
+  "timezone": "Europe/Copenhagen",
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "Dependency Dashboard",
+  "dependencyDashboardLabels": [
+    "dependencies"
+  ],
+  "labels": [
+    "dependencies"
+  ],
+  "assignees": [
+    "2biazdk"
+  ],
+  "rangeStrategy": "bump",
+  "internalChecksFilter": "strict",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": [
+      "before 6am on monday"
+    ],
+    "automerge": true,
+    "automergeType": "pr",
+    "platformAutomerge": true,
+    "addLabels": [
+      "automerge"
+    ]
+  },
+  "packageRules": [
+    {
+      "description": "Wait three days before npm updates are eligible for merge.",
+      "matchDatasources": [
+        "npm"
+      ],
+      "minimumReleaseAge": "3 days"
+    },
+    {
+      "description": "Automerge stable non-major updates after CI passes.",
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true,
+      "addLabels": [
+        "automerge"
+      ]
+    },
+    {
+      "description": "Automerge patch, pin, and digest updates for 0.x packages after CI passes.",
+      "matchUpdateTypes": [
+        "patch",
+        "pin",
+        "digest"
+      ],
+      "matchCurrentVersion": "/^0/",
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true,
+      "addLabels": [
+        "automerge"
+      ]
+    },
+    {
+      "description": "Keep major updates visible for manual review.",
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "automerge": false,
+      "dependencyDashboardApproval": true,
+      "addLabels": [
+        "major"
+      ]
+    }
   ]
 }
