@@ -31,7 +31,7 @@
 		"gulp-tabify": "0.0.2",
 		"gulp-todo": "^5.4.0",
 		"jshint": "^2.9.5",
-		"run-sequence": "^2.1.0",
+		"run-sequence": "^2.2.1",
 		"vinyl-paths": "^2.1.0"
 	},
 	"dependencies": {
