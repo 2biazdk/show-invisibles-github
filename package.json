@@ -32,7 +32,7 @@
 		"gulp-todo": "^5.4.0",
 		"jshint": "^2.9.5",
 		"run-sequence": "^2.1.0",
-		"vinyl-paths": "^2.1.0"
+		"vinyl-paths": "^5.0.0"
 	},
 	"dependencies": {
 		"gulp": "^3.9.1"
