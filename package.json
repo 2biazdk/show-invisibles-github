@@ -11,7 +11,7 @@
 	},
 	"license": "UNLICENSED",
 	"devDependencies": {
-		"del": "^3.0.0",
+		"del": "^8.0.1",
 		"gulp-autoprefixer": "^4.1.0",
 		"gulp-clean": "^0.4.0",
 		"gulp-clean-css": "^3.8.0",
