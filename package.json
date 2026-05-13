@@ -30,7 +30,7 @@
 		"gulp-sourcemaps": "^2.6.5",
 		"gulp-tabify": "0.0.2",
 		"gulp-todo": "^5.4.0",
-		"jshint": "^2.9.5",
+		"jshint": "^2.13.6",
 		"run-sequence": "^2.1.0",
 		"vinyl-paths": "^2.1.0"
 	},
