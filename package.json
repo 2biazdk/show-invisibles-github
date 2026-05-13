@@ -35,6 +35,6 @@
 		"vinyl-paths": "^2.1.0"
 	},
 	"dependencies": {
-		"gulp": "^3.9.1"
+		"gulp": "^5.0.1"
 	}
 }
