@@ -1,273 +1,124 @@
-'use strict';
+import { readdir, readFile, rm, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import gulp from 'gulp';
+import autoprefixer from 'gulp-autoprefixer';
+import cleanCss from 'gulp-clean-css';
+import plumber from 'gulp-plumber';
+import * as dartSass from 'sass';
+import gulpSass from 'gulp-sass';
+import size from 'gulp-size';
+import terser from 'gulp-terser';
+import { deleteAsync } from 'del';
 
-var gulp   = require('gulp');
-var plugin = require('gulp-load-plugins')({
-	pattern: [
-		'gulp-*',
-		'gulp.*',
-		
-		'vinyl-paths',
-		'del',
-		'run-sequence'
-	]
-});
+const sass = gulpSass(dartSass);
+const { dest, parallel, series, src } = gulp;
+const chromeTarget = ['chrome >= 53'];
+const todoExtensions = new Set(['.css', '.htm', '.html', '.js']);
 
-gulp.task(
-	'build',
-	function() {
-		plugin.runSequence(
-			'clean',
-			'todo',
-			'js',
-			'css',
-			'csslint',
-			'img',
-			'misc',
-			'packages'
-		)
+export function clean() {
+	return deleteAsync(['dist/**', 'TODO.md']);
+}
+
+export async function todos() {
+	const entries = await collectSourceFiles('src');
+	const todos = [];
+
+	for (const file of entries) {
+		const text = await readFile(file, 'utf8');
+
+		text.split(/\r?\n/).forEach(function(line, index) {
+			const match = line.match(/\b(?:TODO|FIXME)\b:?\s*(.*)/i);
+
+			if (match) {
+				todos.push(`- ${file}:${index + 1} ${match[1].trim()}`);
+			}
+		});
 	}
-);
 
-gulp.task('clean', clean);
-gulp.task('todo', todos);
-gulp.task('js', js);
-gulp.task('css', css);
-gulp.task('img', img);
-gulp.task('misc', misc);
-gulp.task('packages', packages);
+	if (todos.length) {
+		await writeFile('TODO.md', `${todos.join('\n')}\n`);
+		return;
+	}
 
-gulp.task('jslint', jsLint);
-gulp.task('csslint', cssLint);
-
-function clean() {
-	return plugin.del(['dist/**', 'TODO.md']);
+	await rm('TODO.md', { force: true });
 }
 
-function todos() {
-
-	return gulp.src('./src/**/*.{html,htm,js,css}')
-
-		// Don't break on error
-		.pipe( plugin.plumber() )
-
-		// Sourcemap
-		.pipe( plugin.todo() )
-
-		// Save in Dist folder, or delete if empty
-		.pipe(plugin.if(function (file) {
-			return file.todos && Boolean(file.todos.length);
-		}, gulp.dest('.'), plugin.vinylPaths(plugin.del)))
-
-		// Show size
-		.pipe( plugin.size({
-			title: 'todo',
-			showFiles: true,
-			gzip: true
-		}) )
-
-	;
-
-}
-
-function js() {
-
-	return gulp.src(['./src/**/*.js'])
-
-		// Don't break on error
-		.pipe( plugin.plumber() )
-
-		// Clean
-		.pipe( plugin.tabify() )
-
-		// Save in Src folder
-		.pipe( gulp.dest('./src') )
-
-		// Minify
-		.pipe( plugin.minify({
-			ext:{
-				min:'.js'
-			},
-			noSource: true,
+export function js() {
+	return src(['./src/**/*.js'])
+		.pipe(plumber())
+		.pipe(terser({
 			mangle: true
-		}) )
-
-		// Save in Dist folder
-		.pipe( gulp.dest('./dist') )
-
-		// Show size
-		.pipe( plugin.size({
+		}))
+		.pipe(dest('./dist'))
+		.pipe(size({
 			title: 'js',
 			showFiles: true,
 			gzip: true
-		}) )
-
-	;
-
+		}));
 }
 
-function jsLint() {
-
-	return gulp.src([
-			'./src/**/*.js',
-			'!./src/**/vendor/*'
-		])
-
-		// Don't break on error
-		.pipe( plugin.plumber() )
-
-		// JS linter
-		.pipe( plugin.jshint({
-			esversion: 6
-		}) )
-		.pipe( plugin.jshint.reporter('default') )
-
-		// Show size
-		.pipe( plugin.size({
-			title: 'jsLinting',
+export function css() {
+	return src('./src/*.scss')
+		.pipe(plumber())
+		.pipe(sass())
+		.pipe(autoprefixer({
+			overrideBrowserslist: chromeTarget
+		}))
+		.pipe(cleanCss())
+		.pipe(dest('dist'))
+		.pipe(size({
+			title: 'css',
 			showFiles: true,
 			gzip: true
-		}) )
-
-	;
-
+		}));
 }
 
-function css() {
-
-		return gulp.src('./src/*.scss')
-
-			// Don't break on error
-			.pipe( plugin.plumber() )
-
-			// Sourcemap
-			.pipe( plugin.sourcemaps.init() )
-
-			// Auto-prefixer
-			.pipe( plugin.autoprefixer({
-				'browsers': [
-					'chrome >= 53'
-				]
-			}) )
-
-			// Clean
-			.pipe( plugin.csscomb() )
-			.pipe( plugin.tabify() )
-
-			// Save in Src folder
-			.pipe( gulp.dest('src') )
-
-			// SASS
-			.pipe( plugin.sass() )
-
-			// Clean CSS
-			.pipe( plugin.cleanCss() )
-
-			// Write sourcemaps
-			.pipe( plugin.sourcemaps.write('.') )
-
-			// Save in Dist folder
-			.pipe( gulp.dest('dist') )
-
-			// Show size
-			.pipe( plugin.size({
-				title: 'css',
-				showFiles: true,
-				gzip: true
-			}) )
-
-		;
-
-	}
-
-	function cssLint() {
-
-		return gulp.src('./dist/*.css')
-
-			// Don't break on error
-			.pipe( plugin.plumber() )
-
-			// Auto-prefixer
-			.pipe( plugin.autoprefixer({
-				'browsers': [
-					'chrome >= 53'
-				]
-			}) )
-
-			// Clean
-			.pipe( plugin.csscomb() )
-			.pipe( plugin.tabify() )
-
-			// CSS linter
-			.pipe( plugin.csslint('gulp/css-lint-format.js') )
-			.pipe( plugin.csslint.formatter() )
-
-		;
-
-	};
-
-function img() {
-	return gulp.src('./src/img/**/*.{jpg,jpeg,png,gif,svg,bmp,ico}')
-
-		// Don't break on error
-		.pipe( plugin.plumber() )
-
-		// Save in Dist folder
-		.pipe( gulp.dest('./dist/img') )
-
-		// Show size
-		.pipe( plugin.size({
+export function img() {
+	return src('./src/img/**/*.{jpg,jpeg,png,gif,svg,bmp,ico}')
+		.pipe(plumber())
+		.pipe(dest('./dist/img'))
+		.pipe(size({
 			title: 'img',
 			showFiles: true,
 			gzip: true
-		}) )
-	;
-
+		}));
 }
 
-function misc() {
-
-	return gulp.src('./src/**/*.{html,xml,json,ico}')
-
-		// Save in Dist folder
-		.pipe( gulp.dest('./dist') )
-
-		// Show size
-		.pipe( plugin.size({
+export function misc() {
+	return src('./src/**/*.{html,xml,json,ico}')
+		.pipe(dest('./dist'))
+		.pipe(size({
 			title: 'other files',
 			showFiles: true,
 			gzip: true
-		}) )
-
-	;
-
+		}));
 }
 
-function packages() {
+async function collectSourceFiles(directory) {
+	const dirents = await readdir(directory, { withFileTypes: true });
+	const files = await Promise.all(dirents.map(async function(dirent) {
+		const file = path.join(directory, dirent.name);
 
-	gulp.src('./gulpfile.js')
+		if (dirent.isDirectory()) {
+			return collectSourceFiles(file);
+		}
 
-		// Don't break on error
-		.pipe( plugin.plumber() )
+		if (todoExtensions.has(path.extname(dirent.name))) {
+			return file;
+		}
 
-		// Clean
-		.pipe( plugin.tabify() )
+		return [];
+	}));
 
-		// Save in root folder
-		.pipe( gulp.dest('.') )
-
-	;
-
-	return gulp.src('./package.json')
-
-		// Don't break on error
-		.pipe( plugin.plumber() )
-
-		// Clean
-		.pipe( plugin.tabify(2) )
-
-		// Save in root folder
-		.pipe( gulp.dest('.') )
-
-	;
-
+	return files.flat();
 }
+
+export const build = series(
+	clean,
+	todos,
+	parallel(js, css),
+	img,
+	misc
+);
+
+export default build;
