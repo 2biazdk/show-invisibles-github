@@ -1,25 +1,16 @@
 {
-	"name": "@2biazdk/show-invisibles-github",
-	"description": "Spaces or tabs? Keep your coding style consistent by making whitespace characters visible on Github.",
+	"name": "@forward-plugins/show-invisibles-github",
+	"version": "1.2.6",
+	"description": "Spaces or tabs? Keep your coding style consistent by making whitespace characters visible on GitHub.",
 	"private": true,
-	"repository": "2biazdk/show-invisibles-github",
+	"repository": "forward-plugins/show-invisibles-github",
 	"contributors": [
-		"Tobias Christian Jensen <tobias@2biaz.dk>"
+		"Tobias Christian Jensen <tobias@forlaens.dk>"
 	],
 	"scripts": {
-		"build": "gulp build"
+		"build": "node scripts/build.js",
+		"verify": "node scripts/verify.js",
+		"package": "npm run build && npm run verify && rm -f dist.zip && cd dist && zip -r ../dist.zip ."
 	},
-	"type": "module",
-	"license": "UNLICENSED",
-	"devDependencies": {
-		"del": "^8.0.1",
-		"gulp": "^5.0.1",
-		"gulp-autoprefixer": "^10.0.0",
-		"gulp-clean-css": "^4.3.0",
-		"gulp-plumber": "^1.2.1",
-		"gulp-sass": "^6.0.1",
-		"gulp-size": "^5.0.0",
-		"gulp-terser": "^2.1.0",
-		"sass": "^1.99.0"
-	}
+	"license": "UNLICENSED"
 }

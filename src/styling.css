@@ -1,0 +1,32 @@
+.show-invisibles-github-token {
+	display: inline;
+	position: relative;
+	white-space: pre;
+}
+
+.show-invisibles-github-marker {
+	position: absolute;
+	top: 0;
+	left: 0;
+	color: #d29922 !important;
+	line-height: inherit;
+	pointer-events: none;
+	user-select: none;
+}
+
+.show-invisibles-github-raw {
+	color: transparent !important;
+}
+
+.show-invisibles-github-token--space .show-invisibles-github-marker {
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.show-invisibles-github-disabled .show-invisibles-github-marker {
+	display: none;
+}
+
+.show-invisibles-github-disabled .show-invisibles-github-raw {
+	color: inherit !important;
+}
