@@ -75,7 +75,7 @@
         "major"
       ],
       "automerge": false,
-      "dependencyDashboardApproval": true,
+      "dependencyDashboardApproval": false,
       "addLabels": [
         "major"
       ]
